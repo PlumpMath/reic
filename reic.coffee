@@ -1,30 +1,31 @@
-Customer = new Mongo.Collection("customer")
-Payments = new Mongo.Collection("payments")
 
 if Meteor.isClient
 	
-	# counter starts at 0
-	Session.setDefault "counter", 0
-	Template.hello.helpers counter: ->
-		Session.get "counter"
+	Template.signup.events "click button#email-submit": ->
+		event.preventDefault();
 
-	Template.hello.events "click button": ->
-		
-		# increment the counter when button is clicked
-		Session.set "counter", Session.get("counter") + 1
+		if(! document.getElementById("user-signup").checkValidity())
+			return
 
-		chargeAmount = 5000
-		userName = 'Bob Johnson'
+		firstName = $("#user-first-name").val()
+		lastName = $("#user-last-name").val()
+		userName = firstName + ' ' + lastName
+		userEmail = $("#user-email").val()
+		chargeAmount = 1000
+
 		StripeCheckout.open(
 			key: 'pk_test_G6F7bXvkbxt9kERSp4UXAw4Y'
 			amount: chargeAmount
-			name: 'The Store'
-			description: 'A whole bag of awesome ($50.00)'
-			panelLabel: 'Pay Now'
+			email: userEmail
+			name: 'REIC'
+			description: 'MEMBERSHIP DONATION: ' + userName
+			panelLabel: 'START MEMBERSHIP WITH'
 			zipCode: true
 			token: (res) ->
-				console.info(res);
 				Meteor.call('chargeCard', res.id, res.email, userName, chargeAmount)
+				# yay success
+				$("#user-signup").fadeOut(500)
+				$("#user-signup-success").fadeIn(500)
 		)
 		return
 
@@ -40,7 +41,7 @@ if Meteor.isServer
 				email: email
 			})
 				.then (customer) ->
-					console.log customer
+					#console.log customer
 					return Stripe.charges.create(
 						amount: chargeAmount
 						currency: 'usd'
@@ -48,12 +49,10 @@ if Meteor.isServer
 					)
 				.then (charge) ->
 					#saveStripeCustomerId
-					console.log charge
-					console.log "==="
-					console.log email
+					#console.log charge
+					#console.log email
 	)
 
 	Meteor.startup ->
 
 
-# code to run on server at startup
