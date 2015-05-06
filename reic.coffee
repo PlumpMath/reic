@@ -21,9 +21,9 @@ if Meteor.isClient
 				key: 'pk_test_G6F7bXvkbxt9kERSp4UXAw4Y'
 				amount: chargeAmount
 				email: userEmail
-				name: 'REIC'
-				description: 'MEMBERSHIP DONATION: ' + userName
-				panelLabel: 'START MEMBERSHIP WITH'
+				name: 'REIC MEMBERSHIP'
+				description: 'YOUR NAME: ' + userName.replace("|", " ")
+				panelLabel: 'JOIN:'
 				zipCode: true
 				token: (res) ->
 					Meteor.call('chargeCard', res.id, res.email, userName, chargeAmount)
