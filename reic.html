@@ -10,6 +10,7 @@
 </body>
 
 <template name="info">
+	<h1>Signup & Charge test!</h1>
 	<div class="centerdiv">
 		This is a test for Stripe Checkout-based payment and membership signup. <a href="https://stripe.com/us/pricing">Stripe</a> takes 2.9% + 30 cents per transaction, which is on the low end of credit card processors. <br />
 		<b>For testing, use credit card # 4242 4242 4242 4242, with arbitrary expiration date / validation code / zip code.</b><br/>
@@ -18,26 +19,27 @@
 </template>
 	
 <template name="signup">
-	<div><h1>Signup & Charge test!</h1></div>
-	<div id="member-signup-form">
-		<form id="member-signup">
-			<input id="member-first-name" type="text" placeholder="First Name" class="aligncenter" maxlength="64" required>
-			<input id="member-last-name" type="text" placeholder="Last Name" class="aligncenter" maxlength="64" required>
-			<input id="member-email" type="email" placeholder="Email" class="aligncenter" maxlength="64" required>
-			<button id="email-submit">Submit</button>
-		</form>
-	</div>
-	<div id="member-signup-success" style="display: none;">
-		{{#with memberInfo}}
-		<div class="member-card">
-			<div class="member-card-inner">
-				<div class="member-first-name">{{firstName}}</div>
-				<div class="member-last-name">{{lastName}}</div>
-				<div class="member-email">{{memberEmail}}</div>
-				<div class="member-number">Member No. {{memberNumber}}</div>
+	<div id="signup-card">
+		<div id="member-signup-form" class="front">
+			<form id="member-signup">
+				<input id="member-first-name" type="text" placeholder="First Name" class="aligncenter" maxlength="64" required>
+				<input id="member-last-name" type="text" placeholder="Last Name" class="aligncenter" maxlength="64" required>
+				<input id="member-email" type="email" placeholder="Email" class="aligncenter" maxlength="64" required>
+				<button id="email-submit">Submit</button>
+			</form>
+		</div>
+		<div id="member-signup-success" class="back" style="transform: rotatex(0deg);">
+			<div class="member-card">
+				<div class="member-card-inner">
+					{{#with memberInfo}}
+					<div class="member-first-name">{{firstName}}</div>
+					<div class="member-last-name">{{lastName}}</div>
+					<div class="member-email">{{memberEmail}}</div>
+					<div class="member-number">Member No. {{memberNumber}}</div>
+					{{/with}}
+				</div>
 			</div>
 		</div>
-		{{/with}}
 	</div>
 
 </template>

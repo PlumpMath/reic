@@ -43,7 +43,6 @@ form#member-signup {
 
 	& input {
 		text-align: center;
-		display: block;
 		margin-bottom: 10px;
 	}
 
@@ -55,13 +54,22 @@ form#member-signup {
 	}
 }
 
+#signup-card {
+	text-align: center;
+	width: 300px;
+	margin: 10px;
+
+	& .front, & .back {
+		padding: 10px;
+	}
+}
+
 .member-card {
 	border: 5px solid black;
 	padding: 3px;
 	margin: 10px;
 	font-weight: bold;
 	letter-spacing: -0.4px;
-	width: 300px;
 	font-size: 1.3em;
 
 	& .member-card-inner {

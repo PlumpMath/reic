@@ -17,7 +17,6 @@ if Meteor.isClient
 			console.log Session.get "memberInfo" || {} 
 			return Session.get "memberInfo" || {} 
 
-	
 	Template.signup.events
 		"click button#email-submit": ->
 			event.preventDefault();
@@ -53,12 +52,17 @@ if Meteor.isClient
 						memberEmail: memberEmail
 						memberNumber: memberNumber
 					)
-					$("#member-signup").fadeOut(500)
-					$("#member-signup-success").fadeIn(500)
+					$("#signup-card").flip(true, { trigger: 'manual', speed: 1000 })
 			)
 			return
 
 	Meteor.startup ->
+		$("#signup-card").flip({
+			axis: "y"
+			reverse: false
+			trigger: "manual"
+			speed: 1000
+		});
 
 if Meteor.isServer
 	Meteor.methods(
