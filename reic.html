@@ -4,22 +4,25 @@
 
 <body>
 	<div class="flexcontainer">
-		<div class="centerdiv">
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquam at arcu nec luctus. Etiam vitae arcu condimentum, posuere velit sed, lobortis eros. Vestibulum ac quam pellentesque, posuere massa at, mattis ante. Sed vel accumsan lorem, in pharetra neque. Sed et sodales turpis. Phasellus vulputate tellus in ipsum porttitor, a consectetur risus scelerisque. Nulla non lacus velit. Donec elementum gravida mauris, eget elementum justo dapibus non. Nulla varius nisi in quam feugiat, et iaculis nulla ornare. Mauris quam erat, elementum cursus risus at, varius feugiat elit. In hac habitasse platea dictumst. Donec sit amet lobortis velit. Nam dignissim tellus eget vehicula placerat. Etiam ac ullamcorper lorem. Integer a mattis nibh, vulputate vulputate sapien.
-
-Sed vel fringilla nulla. Suspendisse porttitor metus ut risus mattis, at egestas justo aliquet. Quisque sed semper nibh. Duis tempus lectus felis. Aliquam vel pharetra ante, tempus porta nibh. Curabitur ut tellus lacinia, varius augue et, hendrerit nulla. Maecenas rutrum, leo sed aliquam auctor, est neque tincidunt arcu, placerat rhoncus turpis massa consequat augue. Ut magna mi, tempor nec purus a, ullamcorper suscipit sapien. Ut viverra efficitur libero, sit amet vehicula elit. Nullam magna eros, sagittis sit amet vestibulum non, viverra ac metus. Morbi eleifend sagittis ante nec accumsan. Nullam imperdiet hendrerit nisi et euismod. Quisque et est quam. Vivamus viverra congue felis, id commodo mauris. Cras in nisi molestie, tempus enim et, bibendum magna.
-
-Mauris nisi augue, auctor non tortor vel, eleifend iaculis eros. Donec nulla massa, efficitur in felis vel, bibendum scelerisque ex. Curabitur finibus, eros eget iaculis malesuada, lectus nisi pulvinar ligula, a eleifend purus est ut mauris. Vestibulum vel efficitur nulla. Donec volutpat porta tortor ac consectetur. Nulla non mauris fringilla erat sagittis dapibus. Vivamus lacus mauris, cursus in justo eget, volutpat accumsan elit. Proin tempus elementum quam quis vulputate. Phasellus libero turpis, sagittis vel ligula vitae, ullamcorper tempus ipsum. Sed a massa magna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Etiam nec commodo massa. Phasellus magna elit, tempus vitae iaculis ut, consectetur vel justo.
-
-Nullam suscipit odio ut elit facilisis congue. Donec eget ipsum ut arcu mollis pharetra et eu lacus. In pharetra molestie sem sit amet suscipit. Donec nisl arcu, tristique viverra elit non, posuere laoreet nunc. Sed posuere eget nisi in accumsan. Nam hendrerit, magna ut fringilla vulputate, lorem eros venenatis ex, quis sagittis purus ligula quis erat. Donec eget magna ipsum.
-		</div>
-		
-		<div><h1>Signup & Charge test!</h1></div>
+		{{> info }}
 		{{> signup}}
 	</div>
 </body>
 
+<template name="info">
+	<div class="centerdiv">
+		This is a test for Stripe Checkout-based donations and membership signup. <a href="https://stripe.com/us/pricing">Stripe</a> takes 2.9% + 30 cents per transaction, which is on the way low end of credit card processors
+		{{#each allCustomers}}
+			<div class="customer">
+				{{description}}<br/>
+				{{email}}<br />
+			</div>
+		{{/each}}
+	</div>
+</template>
+	
 <template name="signup">
+	<div><h1>Signup & Charge test!</h1></div>
 	<div id="user-signup-form">
 		<form id="user-signup">
 			<input id="user-first-name" type="text" placeholder="First Name" class="aligncenter" maxlength="64" required>

@@ -1,33 +1,47 @@
 
 if Meteor.isClient
+
+	Template.info.helpers
+		"allCustomers": ->
+			if(! Session.get "allCustomers")
+				Meteor.call("getCustomers", (err, response) ->
+					Session.set("allCustomers", response.data)
+				)
+			return Session.get "allCustomers" || []
 	
-	Template.signup.events "click button#email-submit": ->
-		event.preventDefault();
+	Template.signup.events
+		"click button#email-submit": ->
+			event.preventDefault();
 
-		if(! document.getElementById("user-signup").checkValidity())
+			if(! document.getElementById("user-signup").checkValidity())
+				return
+
+			firstName = $("#user-first-name").val()
+			lastName = $("#user-last-name").val()
+			userName = firstName + '|' + lastName
+			userEmail = $("#user-email").val()
+			chargeAmount = 1000
+
+			StripeCheckout.open(
+				key: 'pk_test_G6F7bXvkbxt9kERSp4UXAw4Y'
+				amount: chargeAmount
+				email: userEmail
+				name: 'REIC'
+				description: 'MEMBERSHIP DONATION: ' + userName
+				panelLabel: 'START MEMBERSHIP WITH'
+				zipCode: true
+				token: (res) ->
+					Meteor.call('chargeCard', res.id, res.email, userName, chargeAmount)
+					# yay success
+					$("#user-signup").fadeOut(500)
+					$("#user-signup-success").fadeIn(500)
+					Meteor.call("getCustomers", (err, response) ->
+						Session.set("allCustomers", response.data)
+						return
+					)
+
+			)
 			return
-
-		firstName = $("#user-first-name").val()
-		lastName = $("#user-last-name").val()
-		userName = firstName + ' ' + lastName
-		userEmail = $("#user-email").val()
-		chargeAmount = 1000
-
-		StripeCheckout.open(
-			key: 'pk_test_G6F7bXvkbxt9kERSp4UXAw4Y'
-			amount: chargeAmount
-			email: userEmail
-			name: 'REIC'
-			description: 'MEMBERSHIP DONATION: ' + userName
-			panelLabel: 'START MEMBERSHIP WITH'
-			zipCode: true
-			token: (res) ->
-				Meteor.call('chargeCard', res.id, res.email, userName, chargeAmount)
-				# yay success
-				$("#user-signup").fadeOut(500)
-				$("#user-signup-success").fadeIn(500)
-		)
-		return
 
 	Meteor.startup ->
 
@@ -51,6 +65,12 @@ if Meteor.isServer
 					#saveStripeCustomerId
 					#console.log charge
 					#console.log email
+
+		'getCustomers': (callback) ->
+			Stripe = StripeAPI(Meteor.settings.stripe_sk)
+			list = Meteor.wrapAsync(Stripe.customers.list, Stripe.customers)
+			result = list()
+			return result
 	)
 
 	Meteor.startup ->
