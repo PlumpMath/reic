@@ -2,12 +2,6 @@
 if Meteor.isClient
 
 	Template.info.helpers
-		"allCustomers": ->
-			if(! Session.get "allCustomers")
-				Meteor.call("getCustomers", (err, response) ->
-					Session.set("allCustomers", response.data)
-				)
-			return Session.get "allCustomers" || []
 
 	
 	Template.signup.events
@@ -36,10 +30,6 @@ if Meteor.isClient
 					# yay success
 					$("#user-signup").fadeOut(500)
 					$("#user-signup-success").fadeIn(500)
-					Meteor.call("getCustomers", (err, response) ->
-						Session.set("allCustomers", response.data)
-						return
-					)
 
 			)
 			return
@@ -67,11 +57,6 @@ if Meteor.isServer
 					#console.log charge
 					#console.log email
 
-		'getCustomers': (callback) ->
-			Stripe = StripeAPI(Meteor.settings.stripe_sk)
-			list = Meteor.wrapAsync(Stripe.customers.list, Stripe.customers)
-			result = list()
-			return result
 	)
 
 	Meteor.startup ->
