@@ -57,6 +57,7 @@ if Meteor.isClient
 			return
 
 	Meteor.startup ->
+		setMemberNumber()
 		$("#signup-card").flip({
 			axis: "y"
 			reverse: false

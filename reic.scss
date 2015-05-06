@@ -37,6 +37,10 @@ input, button {
 	}
 }
 
+button {
+	cursor: pointer;
+}
+
 form#member-signup {
 
 	text-align: center;
@@ -57,6 +61,7 @@ form#member-signup {
 #signup-card {
 	text-align: center;
 	width: 300px;
+	height: 300px;
 	margin: 10px;
 
 	& .front, & .back {
