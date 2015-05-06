@@ -8,6 +8,7 @@ if Meteor.isClient
 					Session.set("allCustomers", response.data)
 				)
 			return Session.get "allCustomers" || []
+
 	
 	Template.signup.events
 		"click button#email-submit": ->
